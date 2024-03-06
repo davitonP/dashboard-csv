@@ -1,9 +1,11 @@
 {
   "name": "dashboard-csv",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": " \"Error: no test specified\" && exit 1",
+    "dev": "node index.js"
   },
   "homepage": "https://github.com/davitonP/dashboard-csv",
   "repository": {
