@@ -19,4 +19,9 @@ export default class DashboardCsv {
       this.data[i] = this.data[i].split(',');
     }
   }
+
+  
+  showData() {
+    console.log(this.data);
+  }
 }
