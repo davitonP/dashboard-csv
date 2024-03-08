@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export default class DashboardCsv {
 
   /*
@@ -9,12 +11,16 @@ export default class DashboardCsv {
   ]
   */
   constructor(data) {
+    moment.locale('es');
     this.data = data;
+    this.last_moment = null;
     this.separateData();
     this.separateByComma();
     this.headers();
     this.removeEmptyRows();
     this.createDeltaValues();
+    this.last_moment = this.lastMoment();
+    console.log(this.last_moment);
     // this.getDeltaValues();
   }
 
@@ -41,6 +47,8 @@ export default class DashboardCsv {
     for (let i = 0; i < last.length; i++) {
       this.delta.push(current[i] - last[i]);
     }
+
+    this.delta[0] = moment(last[0]).from(current[0]);
   }
   showDeltaValues() {
     console.log(this.delta);
@@ -85,6 +93,10 @@ export default class DashboardCsv {
   }
 
 
+  lastMoment() {
+    let last = this.data[this.data.length - 1][0];
+    return moment(last).fromNow();
+  }
   removeEmptyRows() {
     this.data = this.data.filter(row => {
       return row.length > 2;

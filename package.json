@@ -18,5 +18,8 @@
   ],
   "author": "davit_ved",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "moment": "^2.30.1"
+  }
 }
