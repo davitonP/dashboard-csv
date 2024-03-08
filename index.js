@@ -20,7 +20,9 @@ console.log(dash.getLastMoment());
 
 // by rows
 console.log("Prueba de obtener data by rows")
-let rows = dash.getData(null, 5);
+let rows = dash.getData(['time', 'velocity'], 5);
 console.log(rows);
+
+console.log(dash.data)
 
 export default DashboardCsv;

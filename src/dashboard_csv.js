@@ -56,17 +56,17 @@ export default class DashboardCsv {
     console.log(this.delta);
   }
 
-  getDataByHeader(header) {
+  getDataByHeader(header, dataFiltered) {
     let data = [];
     let indexOfHeader = [];
     for (let i = 0; i < header.length; i++) {
       indexOfHeader.push(this.header.indexOf(header[i]));
     }
 
-    for (let i = 0; i < this.data.length; i++) {
+    for (let i = 0; i < dataFiltered.length; i++) {
       let row = [];
       for (let j = 0; j < indexOfHeader.length; j++) {
-        row.push(this.data[i][indexOfHeader[j]]);
+        row.push(dataFiltered[i][indexOfHeader[j]]);
       }
       data.push(row);
     }
@@ -74,20 +74,19 @@ export default class DashboardCsv {
   }
 
   getData(header = null, rows = null , date = null){
-    let data = null
+    let dataFiltered = this.data;
 
     if (rows) {
-      data = this.data.slice(this.data.length - rows, this.data.length);
-      return data;
+      dataFiltered = dataFiltered.slice(dataFiltered.length - rows, dataFiltered.length);
     }
 
     if (header && Array.isArray(header)) {
-      data = this.getDataByHeader(header);
+      dataFiltered = this.getDataByHeader(header, dataFiltered);
     } else {
       console.log("No header correct provided")
     }
 
-    return data;
+    return dataFiltered;
   }
 
   separateData() {
