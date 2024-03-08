@@ -13,15 +13,12 @@ export default class DashboardCsv {
   constructor(data) {
     moment.locale('es');
     this.data = data;
-    this.last_moment = null;
     this.separateData();
     this.separateByComma();
     this.headers();
     this.removeEmptyRows();
     this.createDeltaValues();
-    this.last_moment = this.lastMoment();
-    console.log(this.last_moment);
-    // this.getDeltaValues();
+    this.lastMoment();
   }
 
   headers() {
@@ -50,13 +47,47 @@ export default class DashboardCsv {
 
     this.delta[0] = moment(last[0]).from(current[0]);
   }
+
+  getDeltaValues() {
+    return this.delta;
+  }
+
   showDeltaValues() {
     console.log(this.delta);
   }
 
-  getNRows() {
-    // console.log(this.data);
-    return this.data.length;
+  getDataByHeader(header) {
+    let data = [];
+    let indexOfHeader = [];
+    for (let i = 0; i < header.length; i++) {
+      indexOfHeader.push(this.header.indexOf(header[i]));
+    }
+
+    for (let i = 0; i < this.data.length; i++) {
+      let row = [];
+      for (let j = 0; j < indexOfHeader.length; j++) {
+        row.push(this.data[i][indexOfHeader[j]]);
+      }
+      data.push(row);
+    }
+    return data;
+  }
+
+  getData(header = null, rows = null , date = null){
+    let data = null
+
+    if (rows) {
+      data = this.data.slice(this.data.length - rows, this.data.length);
+      return data;
+    }
+
+    if (header && Array.isArray(header)) {
+      data = this.getDataByHeader(header);
+    } else {
+      console.log("No header correct provided")
+    }
+
+    return data;
   }
 
   separateData() {
@@ -95,7 +126,10 @@ export default class DashboardCsv {
 
   lastMoment() {
     let last = this.data[this.data.length - 1][0];
-    return moment(last).fromNow();
+    this.last_moment = moment(last).fromNow();
+  }
+  getLastMoment() {
+    return this.last_moment;
   }
   removeEmptyRows() {
     this.data = this.data.filter(row => {
